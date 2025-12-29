@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AetherLock | Password Intelligence</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg-dark: #04060c;
+    --panel: rgba(14, 18, 34, 0.8);
+    --cyan: #2cf6ff;
+    --violet: #7b61ff;
+    --gold: #ffcc70;
+    --muted: #9fb3d1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(123,97,255,0.18), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(44,246,255,0.15), transparent 45%),
+        var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Main container */
+.wrapper {
+    width: 580px;
+    padding: 44px;
+    background: var(--panel);
+    backdrop-filter: blur(26px);
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 60px 150px rgba(0,0,0,0.95);
+}
+
+/* Header */
+.brand {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--cyan), var(--violet), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* Input */
+input {
+    margin-top: 34px;
+    width: 100%;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 15px;
+    color: white;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--cyan);
+}
+
+/* Button */
+button {
+    margin-top: 22px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    color: #020615;
+}
+
+/* Result panel (DARK) */
+.result {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    padding: 24px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.78);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        0 30px 80px rgba(0,0,0,0.95);
+}
+
+/* Strength orb */
+.orb {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), transparent 40%),
+        conic-gradient(var(--orb-color) var(--orb-fill), rgba(255,255,255,0.08) 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 50px var(--orb-glow);
+}
+
+.orb span {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Strength states */
+.weak {
+    --orb-color: #ff4d4d;
+    --orb-fill: 90deg;
+    --orb-glow: rgba(255,77,77,0.6);
+}
+
+.medium {
+    --orb-color: #ffcc70;
+    --orb-fill: 180deg;
+    --orb-glow: rgba(255,204,112,0.6);
+}
+
+.strong {
+    --orb-color: #2cff9e;
+    --orb-fill: 270deg;
+    --orb-glow: rgba(44,255,158,0.7);
+}
+
+.verystrong {
+    --orb-color: #2cf6ff;
+    --orb-fill: 360deg;
+    --orb-glow: rgba(44,246,255,0.85);
+}
+
+/* Result text */
+.details {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #f1f6ff;
+}
+
+/* Footer note */
+.note {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="brand">AetherLock</div>
+    <div class="tagline">Advanced Password Intelligence</div>
+
+    <form method="POST">
+        <input type="password" name="password"
+               placeholder="Enter a password to check its strength"
+               required>
+        <button type="submit">Evaluate Strength</button>
+    </form>
+
+    {% if strength %}
+    <div class="result">
+        <div class="orb {{ status }}">
+            <span>{{ strength }}</span>
+        </div>
+
+        <div class="details">
+            <strong>Password Strength:</strong> {{ strength }}<br>
+            <strong>Estimated Time to Crack:</strong> {{ crack_time }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="note">
+        Designed to be clear, modern, and trusted.
+    </div>
+
+</div>
+
+</body>
+</html>
